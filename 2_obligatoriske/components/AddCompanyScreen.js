@@ -44,7 +44,7 @@ function Add_edit_Company({navigation,route}){
 
         if(isEditCompany){
             const id = route.params.company[0];
-            // Define the path to the specific car node you want to update
+            // Define the path to the specific company node you want to update
             const companyRef = ref(db, `Company/${id}`);
 
             // Define the fields you want to update
@@ -66,8 +66,8 @@ function Add_edit_Company({navigation,route}){
                 });
 
         }else{
-        // Define the path to the "Cars" node where you want to push the new data
-        const companyRef = ref(db, "/Company/");
+        // Define the path to the "Companies" node where you want to push the new data
+        const companiesRef = ref(db, "/Companies/");
         
         // Data to push
         const newCompanyData = {
@@ -76,8 +76,8 @@ function Add_edit_Company({navigation,route}){
             category,
         };
         
-        // Push the new data to the "Cars" node
-        await push(companyRef, newCompanyData)
+        // Push the new data to the "Companies" node
+        await push(companiesRef, newCompanyData)
             .then(() => {
             Alert.alert("Saved");
             setNewCompany(initialState);
@@ -105,7 +105,7 @@ function Add_edit_Company({navigation,route}){
                         )
                     })
                 }
-                {/*Hvis vi er inde på edit car, vis save changes i stedet for add car*/}
+                {/*Hvis vi er inde på edit company, vis save changes i stedet for add company*/}
                 <Button title={ isEditCompany ? "Save changes" : "Add company"} onPress={() => handleSave()} />
             </ScrollView>
         </SafeAreaView>
