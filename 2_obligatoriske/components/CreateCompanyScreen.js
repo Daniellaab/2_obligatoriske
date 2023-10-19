@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button } from 'react-native';
-import { getDatabase, ref, onValue } from "firebase/database";
+//import { getDatabase, ref, onValue } from "firebase/database";
+import { db } from '../App';
 
 const CreateCompanyScreen = () => {
   const [name, setName] = useState('');
@@ -8,7 +9,7 @@ const CreateCompanyScreen = () => {
 
   const addCompany = () => {
     // Add a new company to Firebase
-    getDatabase.collection('companies').add({
+    db.collection('companies').add({
       name,
       description,
     });

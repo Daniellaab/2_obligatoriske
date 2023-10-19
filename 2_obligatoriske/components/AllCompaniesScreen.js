@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import { getDatabase, ref, onValue } from "firebase/database";
 
+//virker ikke
 const AllCompaniesScreen = () => {
   const [companies, setCompanies] = useState([]);
 

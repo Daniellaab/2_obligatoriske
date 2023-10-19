@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Button } from 'react-native';
 import { getDatabase, ref, onValue } from "firebase/database";
 
+//virker ikke
 const CreateCouponScreen = ({ route }) => {
   const { companyId } = route.params;
   const [stamps, setStamps] = useState(0);
