@@ -59,18 +59,24 @@ function CompanyList({navigation}){
     );
 }
 
-export default CompanyList;
-
-
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        borderWidth: 1,
-        borderRadius:10,
-        margin: 5,
-        padding: 5,
-        height: 50,
-        justifyContent:'center'
+      flex: 1,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      backgroundColor: '#ffffff',
+      margin: 10,
+      padding: 20,
+      borderRadius: 10,
     },
-    label: { fontWeight: 'bold' },
-});
+    companyName: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginBottom: 5,
+    },
+    companyDescription: {
+      fontSize: 16,
+    },
+  });
+
+export default CompanyList;

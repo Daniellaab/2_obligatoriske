@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Alert } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { getDatabase, ref, push } from 'firebase/database';
+import globalStyles from '../globalStyles/GlobalStyles';
 
 const CreateCouponScreen = ({ route }) => {
   const db = getDatabase();
@@ -14,16 +15,12 @@ const CreateCouponScreen = ({ route }) => {
     }
 
     try {
-      // Define the path to the "coupons" node under the specific company
       const couponsRef = ref(db, `Companies/${company}/coupons`);
-
-      // Data to push
       const newCouponData = {
         description: couponDescription,
         used: false,
       };
 
-      // Push the new coupon data to the "coupons" node under the specific company
       await push(couponsRef, newCouponData);
 
       Alert.alert('Coupon created successfully');
@@ -35,13 +32,14 @@ const CreateCouponScreen = ({ route }) => {
   };
 
   return (
-    <View>
+    <View style={globalStyles.container}>
       <TextInput
+        style={globalStyles.input}
         placeholder="Coupon Description"
         value={couponDescription}
         onChangeText={(text) => setCouponDescription(text)}
       />
-      <Button title="Create Coupon" onPress={createCoupon} />
+      <Button title="Create Coupon" onPress={createCoupon} color="#007aff" />
     </View>
   );
 };
