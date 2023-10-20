@@ -9,6 +9,8 @@ import AddCompanyScreen from './components/AddCompanyScreen';
 import CreateCouponScreen from './components/CreateCouponScreen';
 import AllCompaniesScreen from './components/AllCompaniesScreen';
 import CouponsScreen from './components/CouponsScreen';
+import CameraScreen from './components/CameraScreen';
+import CompanyDetails from './components/CompanyDetailsScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -32,9 +34,11 @@ function App() {
       <Stack.Navigator initialRouteName='Home'>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="AddCompany" component={AddCompanyScreen} />
-        <Stack.Screen name="CreateCoupon" component={CreateCouponScreen} />
         <Stack.Screen name="AllCompanies" component={AllCompaniesScreen} />
+        <Stack.Screen name="CompanyDetails" component={CompanyDetails} />
+        <Stack.Screen name="CreateCoupon" component={CreateCouponScreen} />
         <Stack.Screen name="Coupons" component={CouponsScreen} />
+        <Stack.Screen name="Camera" component={CameraScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

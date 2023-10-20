@@ -45,7 +45,7 @@ function Add_edit_Company({navigation,route}){
         if(isEditCompany){
             const id = route.params.company[0];
             // Define the path to the specific company node you want to update
-            const companyRef = ref(db, `Company/${id}`);
+            const companyRef = ref(db, `Companies/${id}`);
 
             // Define the fields you want to update
             const updatedFields = {
@@ -59,7 +59,7 @@ function Add_edit_Company({navigation,route}){
                 .then(() => {
                 Alert.alert("Din info er nu opdateret");
                 const company = newCompany
-                navigation.navigate("Company Details", { company });
+                navigation.navigate("CompanyDetails", { company });
                 })
                 .catch((error) => {
                 console.error(`Error: ${error.message}`);

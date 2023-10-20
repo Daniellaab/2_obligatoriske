@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import {useEffect, useState} from "react";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, off } from "firebase/database";
 
 function CompanyList({navigation}){
 
-    const [company,setCompanies] = useState()
+    const [companies,setCompanies] = useState()
     useEffect(() => {
         const db = getDatabase();
-        const companiesRef = ref(db, "Company");
+        const companyRef = ref(db, "Companies");
     
         // Use the 'onValue' function to listen for changes in the 'Companies' node
-        onValue(companiesRef, (snapshot) => {
+        onValue(companyRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 // If data exists, set it in the 'companies' state
@@ -22,24 +22,24 @@ function CompanyList({navigation}){
         // Clean up the listener when the component unmounts
         return () => {
             // Unsubscribe the listener
-            off(companiesRef);
+            off(companyRef);
         };
     }, []); // The empty dependency array means this effect runs only once
 
     // Vi viser ingenting hvis der ikke er data
-    if (!company) {
+    if (!companies) {
         return <Text>Loading...</Text>;
     }
 
     const handleSelectCompany = id => {
         /*Her søger vi direkte i vores array af biler og finder bil objektet som matcher idet vi har tilsendt*/
-        const company = Object.entries(company).find( company => company[0] === id /*id*/)
-        navigation.navigate('Company Details', { company });
+        const company = Object.entries(companies).find( company => company[0] === id /*id*/)
+        navigation.navigate('CompanyDetails', { company });
     };
     
     // Flatlist forventer et array. Derfor tager vi alle values fra vores companies objekt, og bruger som array til listen
-    const companyArray = Object.values(company);
-    const companyKeys = Object.keys(company);
+    const companyArray = Object.values(companies);
+    const companyKeys = Object.keys(companies);
 
     return (
         <FlatList
