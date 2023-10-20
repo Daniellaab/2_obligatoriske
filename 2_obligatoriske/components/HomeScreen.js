@@ -9,6 +9,7 @@ const HomeScreen = ({ navigation }) => {
       <Button title="Camera" onPress={() => navigation.navigate('Camera')} />
       <Button title="Create Coupon" onPress={() => navigation.navigate('CreateCoupon')} />
       <Button title="Coupons" onPress={() => navigation.navigate('Coupons')} />
+      <Button title='Map' onPress={() => navigation.navigate('Map')}/>
     </View>
   );
 };
