@@ -1,29 +1,46 @@
 import React, { useState } from 'react';
-import { View, Button } from 'react-native';
-import { getDatabase, ref, onValue } from "firebase/database";
+import { View, TextInput, Button, Alert } from 'react-native';
+import { getDatabase, ref, push } from 'firebase/database';
 
-//virker ikke
 const CreateCouponScreen = ({ route }) => {
-  const { companyId } = route.params;
-  const [stamps, setStamps] = useState(0);
+  const db = getDatabase();
+  const company = route.params;
+  const [couponDescription, setCouponDescription] = useState('');
 
-  const createCoupon = () => {
-    if (stamps >= 8) {
-      // Create a coupon for a specific company
-      getDatabase.collection('coupons').add({
-        companyId,
+  const createCoupon = async () => {
+    if (couponDescription.trim() === '') {
+      Alert.alert('Coupon description cannot be empty');
+      return;
+    }
+
+    try {
+      // Define the path to the "coupons" node under the specific company
+      const couponsRef = ref(db, `Companies/${company}/coupons`);
+
+      // Data to push
+      const newCouponData = {
+        description: couponDescription,
         used: false,
-      });
-      // Reset stamp card after creating the coupon
-      setStamps(0);
-    } else {
-      // Handle case when user does not have enough stamps
+      };
+
+      // Push the new coupon data to the "coupons" node under the specific company
+      await push(couponsRef, newCouponData);
+
+      Alert.alert('Coupon created successfully');
+      setCouponDescription('');
+    } catch (error) {
+      console.error('Error creating coupon:', error);
+      Alert.alert('Failed to create coupon');
     }
   };
 
   return (
     <View>
-      {/* ... (UI components) */}
+      <TextInput
+        placeholder="Coupon Description"
+        value={couponDescription}
+        onChangeText={(text) => setCouponDescription(text)}
+      />
       <Button title="Create Coupon" onPress={createCoupon} />
     </View>
   );
