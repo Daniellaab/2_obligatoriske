@@ -9,7 +9,7 @@ const CouponsScreen = ({ route }) => {
   const [coupons, setCoupons] = useState([]);
 
   useEffect(() => {
-    const couponsRef = ref(db, `Companies/${company}/coupons`);
+    const couponsRef = ref(db, `Coupons/${company}`);
 
     // Use the 'onValue' function to listen for changes in the 'coupons' node under the specific company
     onValue(couponsRef, (snapshot) => {

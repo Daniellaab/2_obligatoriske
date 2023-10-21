@@ -13,6 +13,9 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.buttonText}>
+        Velkommen til StampAway!
+      </Text>
       {menuItems.map((item, index) => (
         <TouchableOpacity
           key={index}

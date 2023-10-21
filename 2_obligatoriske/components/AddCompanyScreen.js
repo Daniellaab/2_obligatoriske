@@ -55,7 +55,7 @@ const AddCompanyScreen = ({ navigation }) => {
         value={companyCategory}
         onChangeText={(text) => setCompanyCategory(text)}
       />
-      <Button title="Add Company" onPress={addCompany} />
+      <Button title="Save Company" onPress={addCompany} />
     </View>
   );
 };

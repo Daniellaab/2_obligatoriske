@@ -15,7 +15,7 @@ const CreateCouponScreen = ({ route }) => {
     }
 
     try {
-      const couponsRef = ref(db, `Companies/${company}/coupons`);
+      const couponsRef = ref(db, `Coupons/${company}`);
       const newCouponData = {
         description: couponDescription,
         used: false,
