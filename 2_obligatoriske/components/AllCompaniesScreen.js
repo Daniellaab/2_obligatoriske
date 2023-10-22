@@ -32,7 +32,7 @@ function CompanyList({navigation}){
     }
 
     const handleSelectCompany = id => {
-        /*Her søger vi direkte i vores array af biler og finder bil objektet som matcher idet vi har tilsendt*/
+        /*Her søger vi direkte i vores array af virksomheder og finder virksomhed-objektet som matcher idet vi har tilsendt*/
         const company = Object.entries(companies).find( company => company[0] === id /*id*/)
         navigation.navigate('CompanyDetails', { company });
     };
@@ -44,7 +44,7 @@ function CompanyList({navigation}){
     return (
         <FlatList
             data={companyArray}
-            // Vi bruger companyKeys til at finde ID på den aktuelle bil og returnerer dette som key, og giver det med som ID til CompanyListItem
+            // Vi bruger companyKeys til at finde ID på den aktuelle virksomhed og returnerer dette som key, og giver det med som ID til CompanyListItem
             keyExtractor={(item, index) => companyKeys[index]}
             renderItem={({ item, index }) => {
                 return(

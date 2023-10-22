@@ -1,36 +1,45 @@
+// Importerer nødvendige komponenter fra React og React Native-pakkerne
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { getDatabase, ref, onValue, off } from 'firebase/database';
-import globalStyles from '../globalStyles/GlobalStyles';
 
+// Komponent til visning af kuponer for et specifikt firma
 const CouponsScreen = ({ route }) => {
+  // Opretter en forbindelse til Firebase-databasen
   const db = getDatabase();
+  // Modtager det valgte firma som en parameter fra navigationen
   const company = route.params;
+  // Tilstand til at opbevare kuponer fra det specifikke firma
   const [coupons, setCoupons] = useState([]);
 
+  // Effekt, der kører ved første rendering og når firmaet ændres
   useEffect(() => {
+    // Opretter en reference til 'coupons' noden under det specifikke firma
     const couponsRef = ref(db, `Coupons/${company}`);
 
-    // Use the 'onValue' function to listen for changes in the 'coupons' node under the specific company
+    // Bruger 'onValue' funktionen til at lytte efter ændringer i 'coupons' noden under det specifikke firma
     onValue(couponsRef, (snapshot) => {
       const couponsData = snapshot.val();
       if (couponsData) {
-        // If data exists, set it in the 'coupons' state
+        // Hvis der er data, opdateres tilstanden med kuponerne
         setCoupons(Object.values(couponsData));
       } else {
+        // Hvis der ikke er data, opdateres tilstanden med et tomt array
         setCoupons([]);
       }
     });
 
-    // Clean up the listener when the component unmounts
+    // Rydder op i lytteren, når komponenten bliver fjernet fra DOM
     return () => {
-      // Unsubscribe the listener
+      // Afmelder lytteren
       off(couponsRef);
     };
   }, [company]);
 
+  // Renderer komponenten med kuponerne
   return (
     <View style={styles.container}>
+      {/* Viser en besked, hvis der ikke er nogen kuponer tilgængelige */}
       {coupons.length === 0 ? (
         <Text style={styles.emptyText}>No coupons available</Text>
       ) : (

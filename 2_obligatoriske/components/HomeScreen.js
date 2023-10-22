@@ -1,7 +1,10 @@
+// Importerer nødvendige komponenter fra React Native-pakken
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
+// HomeScreen komponenten, der viser menuen med forskellige skærmindgange
 const HomeScreen = ({ navigation }) => {
+  // Array med menuindgange og deres tilsvarende skærme
   const menuItems = [
     { title: 'Add Company', screen: 'AddCompany' },
     { title: 'All Companies', screen: 'AllCompanies' },
@@ -11,11 +14,14 @@ const HomeScreen = ({ navigation }) => {
     { title: 'Map', screen: 'Map' },
   ];
 
+  // Renderer komponenten med menuindgangene som berøringsvenlige knapper
   return (
     <View style={styles.container}>
+      {/* Velkomstbesked */}
       <Text style={styles.buttonText}>
         Velkommen til StampAway!
       </Text>
+      {/* Mapper gennem menuindgangene og opretter en berøringsvenlig knap til hver indgang */}
       {menuItems.map((item, index) => (
         <TouchableOpacity
           key={index}
@@ -23,6 +29,7 @@ const HomeScreen = ({ navigation }) => {
           onPress={() => navigation.navigate(item.screen)}
         >
           <View style={styles.button}>
+            {/* Viser titlen på menuindgangen på knappen */}
             <Text style={styles.buttonText}>{item.title}</Text>
           </View>
         </TouchableOpacity>
@@ -31,6 +38,7 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
+// Stilark til komponenten
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -54,4 +62,5 @@ const styles = StyleSheet.create({
   },
 });
 
+// Eksporterer HomeScreen komponenten som standard eksport
 export default HomeScreen;

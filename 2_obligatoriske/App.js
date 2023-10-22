@@ -1,9 +1,10 @@
+// Importerer nødvendige komponenter og funktioner fra React og React Navigation
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getApps, initializeApp } from "firebase/app";
-//import { firestore } from '@react-native-firebase/firestore';
 
+// Importerer de forskellige skærme fra separate filer
 import HomeScreen from './components/HomeScreen';
 import AddCompanyScreen from './components/AddCompanyScreen';
 import CreateCouponScreen from './components/CreateCouponScreen';
@@ -13,10 +14,12 @@ import CameraScreen from './components/CameraScreen';
 import CompanyDetailsScreen from './components/CompanyDetailsScreen';
 import MapScreen from './components/MapScreen';
 
-
+// Opretter en staknavigator til at håndtere navigationen mellem skærmene
 const Stack = createNativeStackNavigator();
 
+// Hovedfunktionen, der definerer den samlede app-komponent
 function App() {
+// Firebase konfigurationsobjekt, der indeholder API-nøgler og andre opsætningsoplysninger
   const firebaseConfig = {
     apiKey: "AIzaSyBqAc41rPdwwSe7rzFBvKKVBTRdlXWL4VY",
     authDomain: "obligatoriske-9bcdb.firebaseapp.com",
@@ -28,8 +31,9 @@ function App() {
   };
   if (getApps().length < 1) {
     initializeApp(firebaseConfig);
-    console.log('Firebase On!');
+    console.log('Firebase On!'); // Udskriver besked i konsollen, når Firebase er aktiveret
   }
+  // Returafsnittet, der indeholder navigationscontaineren og staknavigator med alle skærme
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'>
@@ -45,4 +49,5 @@ function App() {
     </NavigationContainer>
   );
 }
+// Eksporterer App-komponenten som standard eksport for at gøre den tilgængelig for resten af applikationen
 export default App;

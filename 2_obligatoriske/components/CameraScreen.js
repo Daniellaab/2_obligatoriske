@@ -1,32 +1,41 @@
+// Importerer nødvendige komponenter fra React, React Native og Expo-pakkerne
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import {Camera} from "expo-camera";
 import {Button, Image, Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import {StatusBar} from "expo-status-bar";
 
+// Funktionel komponent for kamerafunktionaliteten på skærmen
 const CameraScreen = ({navigation}) => { 
-
+    // Opretter en reference til kameraet
     const cameraRef = useRef();
+
+    // Tilstande til at holde tilladelser, billeder og kameratype
     const [hasPermission, setHasPermission] = useState(null);
     const [imagesArr, setImagesArr] = useState([]);
     const [type, setType] = useState(Camera.Constants.Type.back);
     const [loading,setLoading] = useState(false);
 
+    // Effekt der kører ved første rendring for at anmode om tilladelser til kamera og kamerarulle
     useEffect(() => {
         (async ()=> {
+            // Anmoder om tilladelse til kameraet
             const {status} = await Camera.requestCameraPermissionsAsync();
             if (status !== 'granted') {
                 alert('Beklager, vi mangler tilladelse til din kamerarulle');
             }
+            // Anmoder om tilladelse til kamerarullen (kun for mobilplatforme)
             if (Platform.OS !=='web') {
                 const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
                 if (status !=='granted') {
                     alert('Beklager, vi mangler tilladelse til din kamerarulle');
                 }
             }
+             // Sætter tilladelsen baseret på kamera og kamerarullestatus
             setHasPermission(status==='granted');
         })();
     }, []);
+    // Håndterer tilfælde hvor tilladelse ikke er givet til kameraet eller kamerarullen
     if (hasPermission=== null) {
         return <View />;
     }
@@ -38,6 +47,7 @@ const CameraScreen = ({navigation}) => {
         </View>
         )
     }
+    // Funktion til at tage et billede ved brug af kameraet
     const snap = async () => {
         if (!cameraRef.current) {
             return;
@@ -45,9 +55,11 @@ const CameraScreen = ({navigation}) => {
         setLoading(true);
         const result = await cameraRef.current.takePictureAsync();
 
+        // Tilføjer det tagne billede til listen af billeder
         setImagesArr((imagesArr) => [result].concat(imagesArr));
         setLoading(false);
     };
+    // Funktion til at vise galleriet med de tagne billeder
     const CameraGallery = () => {
         return (
             <View style={styles.gallery}>
@@ -66,6 +78,7 @@ const CameraScreen = ({navigation}) => {
         </View>
         )
     };
+    // Funktion til at vælge et billede fra kamerarullen
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -73,9 +86,11 @@ const CameraScreen = ({navigation}) => {
             quality: 1,
         });
         if (!result.canceled) {
+            // Tilføjer det valgte billede til listen af billeder
             setImagesArr((imagesArr) => [result].concat(imagesArr));
         }
     };
+    // Renderer komponenten med kameraviewet, knapper og galleri
     return (
         <Fragment>
             <StatusBar StatusBarStyle="dark-content" style={{fontcolor:"white"}} backgroundColor={'rgba(255,255,255,0.4)'} />
@@ -95,7 +110,7 @@ const CameraScreen = ({navigation}) => {
                                 <Text style={styles.text}> Flip </Text>
                             </TouchableOpacity>
 
-                            {/*Gir sig selv*/}
+                            {}
                             <TouchableOpacity
                                 style={styles.button}
                                 onPress={snap}
@@ -105,7 +120,7 @@ const CameraScreen = ({navigation}) => {
                                 </Text>
                             </TouchableOpacity>
 
-                            {/*Skift retning på kamera*/}
+                            {/*Flip kamera*/}
                             <TouchableOpacity
                                 style={styles.button}
                                 onPress={pickImage}
@@ -120,7 +135,7 @@ const CameraScreen = ({navigation}) => {
         </Fragment>
     );
 }
-
+// Stilark til komponenten
 const styles = StyleSheet.create({
     container: {
         flex: 1,
